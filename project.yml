@@ -32,5 +32,8 @@ targets:
     platform: tvOS
     sources:
       - Tests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: Bilalian
