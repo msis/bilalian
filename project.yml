@@ -1,0 +1,29 @@
+name: AthanTV
+options:
+  bundleIdPrefix: com.ibnseddik
+packages:
+  Adhan:
+    url: https://github.com/batoulapps/adhan-swift
+    branch: main
+targets:
+  AthanTV:
+    type: application
+    platform: tvOS
+    deploymentTarget: "26.0"
+    sources:
+      - Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ibnseddik.athantv
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: AthanTV
+        LSRequiresIPhoneOS: false
+        UISupportedInterfaceOrientations~tvOS:
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSLocationWhenInUseUsageDescription: "We use your location to calculate prayer times. It does not leave the device."
+        NSLocationUsageDescription: "We use your location to calculate prayer times. It does not leave the device."
+    dependencies:
+      - package: Adhan
