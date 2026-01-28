@@ -44,10 +44,10 @@ struct DashboardView: View {
     private func header(nextPrayer: PrayerTimeEntry?) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(appState.settings.locationSelection?.name ?? "")
-                .font(.title2)
+                .font(.caption)
             if let nextPrayer = nextPrayer {
                 Text("Next: \(nextPrayer.kind.displayName) in \(countdownString(to: nextPrayer.date))")
-                    .font(.title3)
+                    .font(.title2)
                     .foregroundStyle(.secondary)
             } else {
                 Text("No upcoming prayers")
