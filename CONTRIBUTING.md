@@ -1,4 +1,4 @@
-# Contributing to AthanTV
+# Contributing to Bilalian
 
 Thanks for your interest in contributing! Please follow these guidelines to keep changes consistent and easy to review.
 

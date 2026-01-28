@@ -1,4 +1,4 @@
-# AthanTV
+# Bilalian
 
 A tvOS app that displays daily Islamic prayer times and the next upcoming prayer, with location-based calculation and configurable notification preferences.
 
@@ -48,7 +48,7 @@ xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvO
 
 ```
 Sources/
-  AthanTVApp.swift
+  BilalianApp.swift
   AppState.swift
   Models/
   Services/

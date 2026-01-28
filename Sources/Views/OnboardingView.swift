@@ -7,7 +7,7 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            Text("AthanTV")
+            Text("Bilalian")
                 .font(.largeTitle)
                 .bold()
             Text("Get prayer times based on your location.")

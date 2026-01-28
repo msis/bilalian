@@ -5,7 +5,7 @@ import UIKit
 
 /// App entry point.
 @main
-struct AthanTVApp: App {
+struct BilalianApp: App {
     @StateObject private var appState = AppState()
 
     var body: some Scene {

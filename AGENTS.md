@@ -4,7 +4,7 @@ Guidance for automated coding agents working in this repository.
 
 ## Project overview
 
-- **App**: AthanTV (tvOS)
+- **App**: Bilalian (tvOS)
 - **UI**: SwiftUI
 - **Project generation**: XcodeGen (`project.yml`)
 - **Prayer calculations**: Adhan-Swift (SwiftPM)
@@ -20,13 +20,13 @@ xcodegen generate
 ### Build (tvOS Simulator)
 
 ```bash
-xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvOS Simulator,name=Apple TV" -configuration Debug build
+xcodebuild -project Bilalian.xcodeproj -scheme Bilalian -destination "platform=tvOS Simulator,name=Apple TV" -configuration Debug build
 ```
 
 ### Clean build
 
 ```bash
-xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvOS Simulator,name=Apple TV" -configuration Debug clean build
+xcodebuild -project Bilalian.xcodeproj -scheme Bilalian -destination "platform=tvOS Simulator,name=Apple TV" -configuration Debug clean build
 ```
 
 ### Tests
@@ -37,13 +37,13 @@ xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvO
 Run all tests (when available):
 
 ```bash
-xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvOS Simulator,name=Apple TV" test
+xcodebuild -project Bilalian.xcodeproj -scheme Bilalian -destination "platform=tvOS Simulator,name=Apple TV" test
 ```
 
 Run a single test (when available):
 
 ```bash
-xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvOS Simulator,name=Apple TV" -only-testing:<TestTarget>/<TestClass>/<testMethod> test
+xcodebuild -project Bilalian.xcodeproj -scheme Bilalian -destination "platform=tvOS Simulator,name=Apple TV" -only-testing:<TestTarget>/<TestClass>/<testMethod> test
 ```
 
 ### Lint / formatting
@@ -126,6 +126,6 @@ xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvO
 ## Workflow tips
 
 - Regenerate Xcode project after `project.yml` edits.
-- Run `xcodebuild -list -project AthanTV.xcodeproj` to confirm scheme names.
+- Run `xcodebuild -list -project Bilalian.xcodeproj` to confirm scheme names.
 - Keep changes small and reversible.
 - Update README/CONTRIBUTING if behavior changes.

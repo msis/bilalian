@@ -1,4 +1,4 @@
-name: AthanTV
+name: Bilalian
 options:
   bundleIdPrefix: com.ibnseddik
 packages:
@@ -6,7 +6,7 @@ packages:
     url: https://github.com/batoulapps/adhan-swift
     branch: main
 targets:
-  AthanTV:
+  Bilalian:
     type: application
     platform: tvOS
     deploymentTarget: "26.0"
@@ -14,11 +14,11 @@ targets:
       - Sources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ibnseddik.athantv
+        PRODUCT_BUNDLE_IDENTIFIER: com.ibnseddik.bilalian
     info:
       path: Sources/Info.plist
       properties:
-        CFBundleDisplayName: AthanTV
+        CFBundleDisplayName: Bilalian
         LSRequiresIPhoneOS: false
         UISupportedInterfaceOrientations~tvOS:
           - UIInterfaceOrientationLandscapeLeft
