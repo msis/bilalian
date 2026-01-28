@@ -6,12 +6,14 @@ struct PrayerRowView: View {
 
     var body: some View {
         HStack {
+            Image(systemName: entry.kind.symbolName)
+                .imageScale(.large)
             Text(entry.kind.displayName)
                 .font(.title3)
                 .bold(isNext)
             Spacer()
             Text(PrayerTimeFormatter.shared.string(from: entry.date))
-                .font(.title3)
+                .font(isNext ? .title2 : .title3)
                 .foregroundStyle(isNext ? .primary : .secondary)
         }
         .padding(.vertical, 6)
@@ -57,4 +59,3 @@ struct PrayerRowView: View {
         )
     }
 }
-

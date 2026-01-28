@@ -24,6 +24,23 @@ enum PrayerKind: String, CaseIterable, Identifiable, Codable {
     var isNotifiable: Bool {
         self != .sunrise
     }
+
+    var symbolName: String {
+        switch self {
+        case .fajr:
+            return "sun.horizon"
+        case .sunrise:
+            return "sunrise"
+        case .dhuhr:
+            return "sun.max"
+        case .asr:
+            return "sun.min"
+        case .maghrib:
+            return "sunset"
+        case .isha:
+            return "moon.stars"
+        }
+    }
 }
 
 struct PrayerTimeEntry: Identifiable, Hashable {
