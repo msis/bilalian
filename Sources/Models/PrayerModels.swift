@@ -28,7 +28,7 @@ enum PrayerKind: String, CaseIterable, Identifiable, Codable {
     var symbolName: String {
         switch self {
         case .fajr:
-            return "sun.horizon"
+            return "light.max"
         case .sunrise:
             return "sunrise"
         case .dhuhr:

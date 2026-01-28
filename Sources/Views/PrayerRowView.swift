@@ -7,15 +7,15 @@ struct PrayerRowView: View {
     var body: some View {
         HStack {
             Image(systemName: entry.kind.symbolName)
-                .imageScale(.large)
+                .frame(width: 36, alignment: .center)
             Text(entry.kind.displayName)
-                .font(.title3)
-                .bold(isNext)
             Spacer()
             Text(PrayerTimeFormatter.shared.string(from: entry.date))
-                .font(isNext ? .title2 : .title3)
-                .foregroundStyle(isNext ? .primary : .secondary)
         }
+        .imageScale(isNext ? .large : .small)
+        .bold(isNext)
+        .font(isNext ? .title2 : .title3)
+        .foregroundStyle(isNext ? .primary : .secondary)
         .padding(.vertical, 6)
     }
 }
@@ -26,6 +26,13 @@ struct PrayerRowView: View {
             entry: PrayerTimeEntry(
                 kind: .fajr,
                 date: Date()
+            ),
+            isNext: false
+        )
+        PrayerRowView(
+            entry: PrayerTimeEntry(
+                kind: .sunrise,
+                date: Date().addingTimeInterval(1000)
             ),
             isNext: true
         )
