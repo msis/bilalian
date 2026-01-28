@@ -27,3 +27,10 @@ targets:
         NSLocationUsageDescription: "We use your location to calculate prayer times. It does not leave the device."
     dependencies:
       - package: Adhan
+  BilalianTests:
+    type: bundle.unit-test
+    platform: tvOS
+    sources:
+      - Tests
+    dependencies:
+      - target: Bilalian

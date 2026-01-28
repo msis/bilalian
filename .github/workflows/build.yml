@@ -1,0 +1,62 @@
+name: Build tvOS
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            build/DerivedData
+            build/SourcePackages
+          key: ${{ runner.os }}-xcode-${{ hashFiles('project.yml', 'Sources/**', 'Tests/**', 'Bilalian.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-xcode-
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build (tvOS Simulator)
+        run: |
+          xcodebuild \
+            -project Bilalian.xcodeproj \
+            -scheme Bilalian \
+            -destination "platform=tvOS Simulator,name=Apple TV" \
+            -configuration Debug \
+            -derivedDataPath build/DerivedData \
+            -clonedSourcePackagesDirPath build/SourcePackages \
+            -resultBundlePath build/Bilalian.xcresult \
+            build
+
+      - name: Test (tvOS Simulator)
+        run: |
+          xcodebuild \
+            -project Bilalian.xcodeproj \
+            -scheme Bilalian \
+            -destination "platform=tvOS Simulator,name=Apple TV" \
+            -configuration Debug \
+            -derivedDataPath build/DerivedData \
+            -clonedSourcePackagesDirPath build/SourcePackages \
+            -resultBundlePath build/Bilalian-tests.xcresult \
+            test
+
+      - name: Upload build results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bilalian-build-result
+          path: build/*.xcresult
