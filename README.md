@@ -14,6 +14,12 @@ A tvOS app that displays daily Islamic prayer times and the next upcoming prayer
 - Time-of-day gradient background.
 - Idle timer disabled to keep the display visible.
 
+## Screenshots
+
+| Onboarding | Dashboard | Settings |
+| --- | --- | --- |
+| ![Onboarding](Assets/onboarding.png) | ![Dashboard](Assets/dashboard.png) | ![Settings](Assets/settings.png) |
+
 ## Tech Stack
 
 - **SwiftUI** for UI.
@@ -36,12 +42,12 @@ A tvOS app that displays daily Islamic prayer times and the next upcoming prayer
 xcodegen generate
 ```
 
-This creates `AthanTV.xcodeproj` using `project.yml`.
+This creates `Bilalian.xcodeproj` using `project.yml`.
 
 ### Build (Simulator)
 
 ```bash
-xcodebuild -project AthanTV.xcodeproj -scheme AthanTV -destination "platform=tvOS Simulator,name=Apple TV" -configuration Debug build
+xcodebuild -project Bilalian.xcodeproj -scheme Bilalian -destination "platform=tvOS Simulator,name=Apple TV" -configuration Debug build
 ```
 
 ## App Structure
