@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 
+/// Central app state and coordination for services + settings.
 @MainActor
 final class AppState: ObservableObject {
     @Published private(set) var settings: AppSettings
@@ -25,34 +26,40 @@ final class AppState: ObservableObject {
         }
     }
 
+    /// Marks onboarding as complete and refreshes the schedule.
     func completeOnboarding() {
         settings.hasCompletedOnboarding = true
         persistSettings()
         refreshSchedule()
     }
 
+    /// Updates the saved location and recomputes the schedule.
     func updateLocation(_ selection: LocationSelection) {
         settings.locationSelection = selection
         persistSettings()
         refreshSchedule()
     }
 
+    /// Updates the calculation method and recomputes the schedule.
     func updateCalculationMethod(_ method: CalculationMethodOption) {
         settings.calculationMethod = method
         persistSettings()
         refreshSchedule()
     }
 
+    /// Updates the toggle for a specific prayer.
     func updateNotificationPreference(_ kind: PrayerKind, enabled: Bool) {
         settings.notificationPrefs.setEnabled(enabled, for: kind)
         persistSettings()
         refreshSchedule()
     }
 
+    /// Triggers a location permission prompt.
     func requestLocation() {
         locationService.requestAuthorization()
     }
 
+    /// Refreshes today's schedule and notifications.
     func refreshSchedule() {
         guard let location = settings.locationSelection else {
             schedule = nil
@@ -70,14 +77,17 @@ final class AppState: ObservableObject {
         isLoading = false
     }
 
+    /// Fetches prayer entries for a specific date.
     func prayerEntries(for location: LocationSelection, on date: Date) -> [PrayerTimeEntry] {
         prayerService.entries(for: location, method: settings.calculationMethod, date: date)
     }
 
+    /// Persists settings to disk.
     private func persistSettings() {
         settingsStore.save(settings)
     }
 
+    /// Observes CoreLocation updates and saves them.
     private func bindLocationUpdates() {
         locationService.$lastLocation
             .compactMap { $0 }
@@ -104,4 +114,3 @@ final class AppState: ObservableObject {
         return state
     }
 }
-

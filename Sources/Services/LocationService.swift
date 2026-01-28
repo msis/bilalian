@@ -4,6 +4,7 @@ import Combine
 import UIKit
 #endif
 
+/// Wraps CoreLocation for single-shot location updates.
 final class LocationService: NSObject, ObservableObject {
     @Published var authorizationStatus: CLAuthorizationStatus
     @Published var lastLocation: CLLocation?
@@ -19,10 +20,12 @@ final class LocationService: NSObject, ObservableObject {
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
     }
 
+    /// Requests When-In-Use authorization.
     func requestAuthorization() {
         manager.requestWhenInUseAuthorization()
     }
 
+    /// Requests a single location update.
     func requestLocation() {
         manager.requestLocation()
     }

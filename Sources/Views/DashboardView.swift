@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Main screen showing daily prayer times and countdown.
 struct DashboardView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var timer = CountdownTimerService()
@@ -39,6 +40,7 @@ struct DashboardView: View {
         }
     }
 
+    /// Header showing location and next prayer countdown.
     private func header(nextPrayer: PrayerTimeEntry?) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(appState.settings.locationSelection?.name ?? "")
@@ -55,6 +57,7 @@ struct DashboardView: View {
         }
     }
 
+    /// Prayer list for the day.
     private var scheduleList: some View {
         VStack(spacing: 12) {
             ForEach(appState.schedule?.entries ?? []) { entry in
@@ -65,6 +68,7 @@ struct DashboardView: View {
         .padding(.top, 8)
     }
 
+    /// Computes the next upcoming prayer, falling back to tomorrow.
     private var nextPrayerEntry: PrayerTimeEntry? {
         guard let location = appState.settings.locationSelection else {
             return nil
@@ -79,6 +83,7 @@ struct DashboardView: View {
         )
     }
 
+    /// Formats a countdown interval as HH:mm:ss.
     private func countdownString(to date: Date) -> String {
         let interval = max(0, Int(date.timeIntervalSince(timer.now)))
         let hours = interval / 3600
@@ -94,4 +99,3 @@ struct DashboardView: View {
             .environmentObject(AppState.previewValue)
     }
 }
-

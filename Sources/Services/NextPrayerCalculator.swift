@@ -1,6 +1,8 @@
 import Foundation
 
+/// Picks the next prayer from today's or next day's entries.
 struct NextPrayerCalculator {
+    /// Returns the next upcoming entry, falling back to the next day's list.
     static func nextPrayer(
         from entries: [PrayerTimeEntry],
         at date: Date = Date(),

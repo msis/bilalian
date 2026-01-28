@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Footer showing current time plus Gregorian and Hijri dates.
 struct DateFooterView: View {
     let display: DateDisplay
     let currentTime: String

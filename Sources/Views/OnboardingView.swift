@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// First-launch flow for location and city selection.
 struct OnboardingView: View {
     @EnvironmentObject var appState: AppState
     @State private var showSearch = false
@@ -58,4 +59,3 @@ struct OnboardingView: View {
     OnboardingView()
         .environmentObject(AppState())
 }
-

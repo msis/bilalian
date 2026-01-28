@@ -1,6 +1,7 @@
 import Foundation
 import MapKit
 
+/// Search result for city lookup.
 struct CitySearchResult: Identifiable, Hashable {
     let id = UUID()
     let title: String
@@ -22,10 +23,12 @@ struct CitySearchResult: Identifiable, Hashable {
     }
 }
 
+/// Performs MapKit local search queries for cities.
 @MainActor
 final class CitySearchService: ObservableObject {
     @Published var results: [CitySearchResult] = []
 
+    /// Executes a MapKit search and updates published results.
     func search(query: String) async {
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             results = []

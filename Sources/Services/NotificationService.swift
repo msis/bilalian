@@ -1,7 +1,9 @@
 import Foundation
 import UserNotifications
 
+/// Handles local notification scheduling (no-op on tvOS).
 final class NotificationService {
+    /// Requests notification authorization when supported.
     func requestAuthorization() async {
         #if os(tvOS)
         return
@@ -11,6 +13,7 @@ final class NotificationService {
         #endif
     }
 
+    /// Schedules prayer notifications for enabled prayers.
     func scheduleNotifications(for schedule: PrayerSchedule, preferences: NotificationPreferences) async {
         #if os(tvOS)
         return

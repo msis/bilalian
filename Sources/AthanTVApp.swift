@@ -3,6 +3,7 @@ import SwiftUI
 import UIKit
 #endif
 
+/// App entry point.
 @main
 struct AthanTVApp: App {
     @StateObject private var appState = AppState()

@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Entry point that routes to onboarding or dashboard.
 struct RootView: View {
     @EnvironmentObject var appState: AppState
 
@@ -18,4 +19,3 @@ struct RootView: View {
     RootView()
         .environmentObject(AppState())
 }
-

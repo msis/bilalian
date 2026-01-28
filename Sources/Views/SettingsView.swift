@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Settings for notifications, location, and calculation method.
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
@@ -57,4 +58,3 @@ struct SettingsView: View {
             .environmentObject(AppState.previewValue)
     }
 }
-

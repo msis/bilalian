@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// UI for searching and selecting a city.
 struct CitySearchView: View {
     @EnvironmentObject var appState: AppState
     @State private var query: String = ""
@@ -45,6 +46,7 @@ struct CitySearchView: View {
         .padding(32)
     }
 
+    /// Runs the async search and updates loading state.
     private func performSearch() async {
         isSearching = true
         await appState.citySearchService.search(query: query)
@@ -56,4 +58,3 @@ struct CitySearchView: View {
     CitySearchView(onSelect: { _ in })
         .environmentObject(AppState())
 }
-

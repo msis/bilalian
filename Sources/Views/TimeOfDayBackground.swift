@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Background gradient that adapts to time of day.
 struct TimeOfDayBackground: View {
     let date: Date
 
@@ -12,6 +13,7 @@ struct TimeOfDayBackground: View {
         .ignoresSafeArea()
     }
 
+    /// Returns a simple palette based on the current hour.
     private func gradientColors(for date: Date) -> [Color] {
         let hour = Calendar.current.component(.hour, from: date)
         switch hour {
@@ -30,4 +32,3 @@ struct TimeOfDayBackground: View {
 #Preview {
     TimeOfDayBackground(date: Date())
 }
-

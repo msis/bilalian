@@ -1,5 +1,6 @@
 import Foundation
 
+/// Formats prayer time dates using the current locale.
 struct PrayerTimeFormatter {
     static let shared = PrayerTimeFormatter()
 
@@ -13,6 +14,7 @@ struct PrayerTimeFormatter {
         timeFormatter = formatter
     }
 
+    /// Formats a Date into a localized short time string.
     func string(from date: Date) -> String {
         timeFormatter.string(from: date)
     }

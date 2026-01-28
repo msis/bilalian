@@ -1,5 +1,6 @@
 import Foundation
 
+/// Supported prayer time categories shown in the UI.
 enum PrayerKind: String, CaseIterable, Identifiable, Codable {
     case fajr
     case sunrise
@@ -10,6 +11,7 @@ enum PrayerKind: String, CaseIterable, Identifiable, Codable {
 
     var id: String { rawValue }
 
+    /// User-facing name for display.
     var displayName: String {
         switch self {
         case .fajr: return "Fajr"
@@ -21,10 +23,12 @@ enum PrayerKind: String, CaseIterable, Identifiable, Codable {
         }
     }
 
+    /// Whether the prayer can be scheduled as a notification.
     var isNotifiable: Bool {
         self != .sunrise
     }
 
+    /// SF Symbol used to represent the prayer in the list.
     var symbolName: String {
         switch self {
         case .fajr:
@@ -43,6 +47,7 @@ enum PrayerKind: String, CaseIterable, Identifiable, Codable {
     }
 }
 
+/// A single prayer time for the current day.
 struct PrayerTimeEntry: Identifiable, Hashable {
     let id = UUID()
     let kind: PrayerKind

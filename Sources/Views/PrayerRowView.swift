@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Single row showing prayer icon, name, and time.
 struct PrayerRowView: View {
     let entry: PrayerTimeEntry
     let isNext: Bool
