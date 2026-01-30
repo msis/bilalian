@@ -14,8 +14,9 @@ struct PrayerTimeFormatter {
         timeFormatter = formatter
     }
 
-    /// Formats a Date into a localized short time string.
-    func string(from date: Date) -> String {
-        timeFormatter.string(from: date)
+    /// Formats a Date into a localized short time string for a time zone.
+    func string(from date: Date, timeZone: TimeZone) -> String {
+        timeFormatter.timeZone = timeZone
+        return timeFormatter.string(from: date)
     }
 }

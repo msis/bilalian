@@ -34,15 +34,18 @@ struct DateService {
     }
 
     /// Returns formatted Gregorian and Hijri date strings.
-    func displayStrings(for date: Date = Date()) -> DateDisplay {
-        DateDisplay(
+    func displayStrings(for date: Date = Date(), timeZone: TimeZone) -> DateDisplay {
+        gregorianFormatter.timeZone = timeZone
+        hijriFormatter.timeZone = timeZone
+        return DateDisplay(
             gregorian: gregorianFormatter.string(from: date),
             hijri: hijriFormatter.string(from: date)
         )
     }
 
     /// Returns the localized current time string.
-    func timeString(for date: Date = Date()) -> String {
-        timeFormatter.string(from: date)
+    func timeString(for date: Date = Date(), timeZone: TimeZone) -> String {
+        timeFormatter.timeZone = timeZone
+        return timeFormatter.string(from: date)
     }
 }

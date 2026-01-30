@@ -30,7 +30,8 @@ struct CitySearchView: View {
                         name: name,
                         latitude: result.coordinate.latitude,
                         longitude: result.coordinate.longitude,
-                        isCurrentLocation: false
+                        isCurrentLocation: false,
+                        timeZoneIdentifier: nil
                     )
                     onSelect(selection)
                 } label: {

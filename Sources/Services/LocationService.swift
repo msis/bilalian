@@ -29,6 +29,18 @@ final class LocationService: NSObject, ObservableObject {
     func requestLocation() {
         manager.requestLocation()
     }
+
+    /// Resolves the time zone for a coordinate via reverse geocoding.
+    func resolveTimeZone(for coordinate: CLLocationCoordinate2D) async -> TimeZone? {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        do {
+            let placemarks = try await geocoder.reverseGeocodeLocation(location)
+            return placemarks.first?.timeZone
+        } catch {
+            return nil
+        }
+    }
 }
 
 extension LocationService: CLLocationManagerDelegate {

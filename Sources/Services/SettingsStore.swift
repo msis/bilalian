@@ -9,10 +9,10 @@ final class SettingsStore {
     /// Loads settings from disk or returns defaults.
     func load() -> AppSettings {
         if let data = defaults.data(forKey: settingsKey) {
-            return decodeSettings(from: data)
+            return validate(decodeSettings(from: data))
         }
         if let legacyData = defaults.data(forKey: legacySettingsKey) {
-            let settings = decodeSettings(from: legacyData)
+            let settings = validate(decodeSettings(from: legacyData))
             save(settings)
             defaults.removeObject(forKey: legacySettingsKey)
             return settings
@@ -42,5 +42,22 @@ final class SettingsStore {
         } catch {
             return AppSettings()
         }
+    }
+
+    private func validate(_ settings: AppSettings) -> AppSettings {
+        var validated = settings
+        if let location = settings.locationSelection {
+            if !location.hasValidCoordinates {
+                validated.locationSelection = nil
+            } else if let identifier = location.timeZoneIdentifier {
+                let trimmed = identifier.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                if trimmed.isEmpty || TimeZone(identifier: trimmed) == nil {
+                    var updated = location
+                    updated.timeZoneIdentifier = nil
+                    validated.locationSelection = updated
+                }
+            }
+        }
+        return validated
     }
 }

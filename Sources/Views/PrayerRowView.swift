@@ -4,6 +4,7 @@ import SwiftUI
 struct PrayerRowView: View {
     let entry: PrayerTimeEntry
     let isNext: Bool
+    let timeZone: TimeZone
 
     var body: some View {
         HStack {
@@ -11,7 +12,7 @@ struct PrayerRowView: View {
                 .frame(width: 36, alignment: .center)
             Text(entry.kind.displayName)
             Spacer()
-            Text(PrayerTimeFormatter.shared.string(from: entry.date))
+            Text(PrayerTimeFormatter.shared.string(from: entry.date, timeZone: timeZone))
         }
         .imageScale(isNext ? .large : .small)
         .bold(isNext)
@@ -28,42 +29,48 @@ struct PrayerRowView: View {
                 kind: .fajr,
                 date: Date()
             ),
-            isNext: false
+            isNext: false,
+            timeZone: .current
         )
         PrayerRowView(
             entry: PrayerTimeEntry(
                 kind: .sunrise,
                 date: Date().addingTimeInterval(1000)
             ),
-            isNext: true
+            isNext: true,
+            timeZone: .current
         )
         PrayerRowView(
             entry: PrayerTimeEntry(
                 kind: .dhuhr,
                 date: Date().addingTimeInterval(3600)
             ),
-            isNext: false
+            isNext: false,
+            timeZone: .current
         )
         PrayerRowView(
             entry: PrayerTimeEntry(
                 kind: .asr,
                 date: Date().addingTimeInterval(7200)
             ),
-            isNext: false
+            isNext: false,
+            timeZone: .current
         )
         PrayerRowView(
             entry: PrayerTimeEntry(
                 kind: .maghrib,
                 date: Date().addingTimeInterval(10800)
             ),
-            isNext: false
+            isNext: false,
+            timeZone: .current
         )
         PrayerRowView(
             entry: PrayerTimeEntry(
                 kind: .isha,
                 date: Date().addingTimeInterval(14400)
             ),
-            isNext: false
+            isNext: false,
+            timeZone: .current
         )
     }
 }

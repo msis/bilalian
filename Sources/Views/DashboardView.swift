@@ -4,9 +4,14 @@ import SwiftUI
 struct DashboardView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var timer = CountdownTimerService()
+    @State private var path = NavigationPath()
+
+    private enum Route: Hashable {
+        case settings
+    }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             ZStack {
                 TimeOfDayBackground(date: timer.now)
                 let nextPrayer = nextPrayerEntry
@@ -15,8 +20,8 @@ struct DashboardView: View {
                     scheduleList
                     Spacer()
                     DateFooterView(
-                        display: DateService.shared.displayStrings(for: timer.now),
-                        currentTime: DateService.shared.timeString(for: timer.now)
+                        display: DateService.shared.displayStrings(for: timer.now, timeZone: scheduleTimeZone),
+                        currentTime: DateService.shared.timeString(for: timer.now, timeZone: scheduleTimeZone)
                     )
                         .frame(maxWidth: .infinity)
                 }
@@ -24,10 +29,14 @@ struct DashboardView: View {
             }
             .navigationTitle("Prayer Times")
             .toolbar {
-                NavigationLink {
-                    SettingsView()
-                } label: {
+                NavigationLink(value: Route.settings) {
                     Image(systemName: "gearshape")
+                }
+            }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .settings:
+                    SettingsView()
                 }
             }
             .onAppear {
@@ -36,6 +45,12 @@ struct DashboardView: View {
             }
             .onDisappear {
                 timer.stop()
+            }
+            .onChange(of: appState.shouldShowDashboard) { _, shouldShow in
+                if shouldShow {
+                    path = NavigationPath()
+                    appState.acknowledgeDashboardRequest()
+                }
             }
         }
     }
@@ -46,9 +61,17 @@ struct DashboardView: View {
             Text(appState.settings.locationSelection?.name ?? "")
                 .font(.caption)
             if let nextPrayer = nextPrayer {
-                Text("Next: \(nextPrayer.kind.displayName) in \(countdownString(to: nextPrayer.date))")
-                    .font(.title2)
+                let leadTimeSeconds = TimeInterval(appState.settings.notificationLeadTime.minutesOffset * 60)
+                let fireDate = nextPrayer.date.addingTimeInterval(-leadTimeSeconds)
+                let showPrayerTime = leadTimeSeconds > 0
+                Text("Athan in \(countdownString(to: fireDate))")
+                    .font(showPrayerTime ? .title2 : .title)
                     .foregroundStyle(.secondary)
+                if showPrayerTime {
+                    Text("Prayer at \(PrayerTimeFormatter.shared.string(from: nextPrayer.date, timeZone: scheduleTimeZone))")
+                        .font(.title3)
+                        .foregroundStyle(.secondary)
+                }
             } else {
                 Text("No upcoming prayers")
                     .font(.title3)
@@ -62,7 +85,7 @@ struct DashboardView: View {
         VStack(spacing: 12) {
             ForEach(appState.schedule?.entries ?? []) { entry in
                 let isNext = entry.id == nextPrayerEntry?.id
-                PrayerRowView(entry: entry, isNext: isNext)
+                PrayerRowView(entry: entry, isNext: isNext, timeZone: scheduleTimeZone)
             }
         }
         .padding(.top, 8)
@@ -74,13 +97,19 @@ struct DashboardView: View {
             return nil
         }
         let todayEntries = appState.schedule?.entries ?? []
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: timer.now) ?? timer.now
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = location.timeZone
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: timer.now) ?? timer.now
         let nextDayEntries = appState.prayerEntries(for: location, on: tomorrow)
         return NextPrayerCalculator.nextPrayer(
             from: todayEntries,
             at: timer.now,
             nextDayEntries: nextDayEntries
         )
+    }
+
+    private var scheduleTimeZone: TimeZone {
+        appState.schedule?.timeZone ?? appState.settings.locationSelection?.timeZone ?? .current
     }
 
     /// Formats a countdown interval as HH:mm:ss.

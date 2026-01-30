@@ -12,6 +12,8 @@ targets:
     deploymentTarget: "26.0"
     sources:
       - Sources
+    resources:
+      - Sources/Resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.ibnseddik.bilalian
