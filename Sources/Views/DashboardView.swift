@@ -29,8 +29,12 @@ struct DashboardView: View {
             }
             .navigationTitle("Prayer Times")
             .toolbar {
-                NavigationLink(value: Route.settings) {
-                    Image(systemName: "gearshape")
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(value: Route.settings) {
+                        Label("Settings", systemImage: "gearshape")
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
                 }
             }
             .navigationDestination(for: Route.self) { route in

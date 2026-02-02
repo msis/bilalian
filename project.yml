@@ -25,8 +25,8 @@ targets:
         UISupportedInterfaceOrientations~tvOS:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
-        NSLocationWhenInUseUsageDescription: "We use your location to calculate prayer times. It does not leave the device."
-        NSLocationUsageDescription: "We use your location to calculate prayer times. It does not leave the device."
+        NSLocationWhenInUseUsageDescription: "Your location is used locally to calculate accurate prayer times for your area."
+        NSLocationUsageDescription: "Your location is used locally to calculate accurate prayer times for your area."
     dependencies:
       - package: Adhan
   BilalianTests:

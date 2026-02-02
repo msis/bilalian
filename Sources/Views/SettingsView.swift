@@ -4,8 +4,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
-    @Namespace private var focusScope
-
+    
     private func notificationBinding(for kind: PrayerKind) -> Binding<Bool> {
         Binding(get: {
             appState.settings.notificationPrefs.isEnabled(for: kind)
@@ -15,57 +14,116 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        Form {
-            Section(notificationsTitle) {
-                ForEach(PrayerKind.allCases.filter { $0.isNotifiable }) { kind in
-                    Toggle(kind.displayName, isOn: notificationBinding(for: kind))
-                }
-
-                Picker("Alert timing", selection: Binding(get: {
-                    appState.settings.notificationLeadTime
-                }, set: { leadTime in
-                    appState.updateNotificationLeadTime(leadTime)
-                })) {
-                    ForEach(NotificationLeadTime.allCases) { option in
-                        Text(option.displayName)
-                            .tag(option)
+        ScrollView {
+            VStack(spacing: 40) {
+                // Notifications
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(notificationsTitle)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    
+                    VStack(spacing: 16) {
+                        ForEach(PrayerKind.allCases.filter { $0.isNotifiable }) { kind in
+                            Toggle(kind.displayName, isOn: notificationBinding(for: kind))
+                        }
                     }
-                }
-                Text(notificationFootnote)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-
-            Section("Location") {
-                Text(appState.settings.locationSelection?.name ?? "Not set")
-                NavigationLink("Change City") {
-                    CitySearchView { selection in
-                        appState.updateLocation(selection)
-                        dismiss()
-                    }
-                }
-                Button("Use My Location") {
-                    appState.requestLocation()
-                }
-            }
-
-            Section("Calculation Method") {
-                ForEach(CalculationMethodOption.allCases) { option in
-                    Button {
-                        appState.updateCalculationMethod(option)
-                        dismiss()
-                    } label: {
-                        HStack {
-                            Text(option.displayName)
-                            Spacer()
-                            if option == appState.settings.calculationMethod {
-                                Image(systemName: "checkmark")
-                                    .foregroundStyle(.secondary)
+                    
+                    HStack {
+                        Text("Alert timing")
+                        Spacer()
+                        Picker("Alert timing", selection: Binding(get: {
+                            appState.settings.notificationLeadTime
+                        }, set: { leadTime in
+                            appState.updateNotificationLeadTime(leadTime)
+                        })) {
+                            ForEach(NotificationLeadTime.allCases) { option in
+                                Text(option.displayName)
+                                    .tag(option)
                             }
+                        }
+                        .pickerStyle(.menu)
+                    }
+
+                    Text(notificationFootnote)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                // Location
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Location")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text(appState.settings.locationSelection?.name ?? "Not set")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+
+                        NavigationLink {
+                            CitySearchView { selection in
+                                appState.updateLocation(selection)
+                                dismiss()
+                            }
+                        } label: {
+                            HStack {
+                                Text("Change City")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .padding()
+                        }
+                        .buttonStyle(.card)
+
+                        Button {
+                            appState.requestLocation()
+                        } label: {
+                            HStack {
+                                Text("Use My Location")
+                                Spacer()
+                                Image(systemName: "location")
+                            }
+                            .padding()
+                        }
+                        .buttonStyle(.card)
+                    }
+                    
+                    Text("Your location is used locally to calculate accurate prayer times for your area.")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                // Calculation Method
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Calculation Method")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    
+                    VStack(spacing: 16) {
+                        ForEach(CalculationMethodOption.allCases) { option in
+                            Button {
+                                appState.updateCalculationMethod(option)
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Text(option.displayName)
+                                    Spacer()
+                                    if option == appState.settings.calculationMethod {
+                                        Image(systemName: "checkmark")
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .padding()
+                            }
+                            .buttonStyle(.card)
                         }
                     }
                 }
             }
+            .padding(40)
         }
         .navigationTitle("Settings")
     }

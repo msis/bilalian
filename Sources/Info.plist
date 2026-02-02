@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<false/>
 	<key>NSLocationUsageDescription</key>
-	<string>We use your location to calculate prayer times. It does not leave the device.</string>
+	<string>Your location is used locally to calculate accurate prayer times for your area.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to calculate prayer times. It does not leave the device.</string>
+	<string>Your location is used locally to calculate accurate prayer times for your area.</string>
 	<key>UISupportedInterfaceOrientations~tvOS</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

@@ -27,6 +27,12 @@ struct OnboardingView: View {
                 .buttonStyle(.bordered)
             }
             .padding(.top, 12)
+            
+            Text("Your location is used locally to calculate accurate prayer times for your area.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
 
             if let selection = appState.settings.locationSelection {
                 VStack(spacing: 8) {
@@ -46,7 +52,7 @@ struct OnboardingView: View {
             }
         }
         .padding(48)
-        .sheet(isPresented: $showSearch) {
+        .fullScreenCover(isPresented: $showSearch) {
             CitySearchView { selection in
                 appState.updateLocation(selection)
                 showSearch = false
